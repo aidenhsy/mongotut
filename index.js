@@ -18,9 +18,7 @@ app.post('/api/songs', async (req, res) => {
 });
 
 app.post('/api/lyrics', async (req, res) => {
-  const songId = req.body.songId;
-  const song = await Song.findOne({ _id: songId });
-  res.json(await song.addLyric(req.body));
+  res.json(await Song.addLyric(req.body));
 });
 
 app.get('/api/songs/:id', async (req, res) => {

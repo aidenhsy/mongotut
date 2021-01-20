@@ -14,11 +14,11 @@ const SongSchema = new mongoose.Schema({
   ],
 });
 
-SongSchema.methods.addLyric = async function ({ content }) {
-  const newLyric = await Lyric.create({ song: this._id, content: content });
-  console.log(this);
-  this.lyrics.push(newLyric._id);
-  this.save();
+SongSchema.statics.addLyric = async function ({ songId, content }) {
+  const song = await Song.findOne({ _id: songId });
+  const newLyric = await Lyric.create({ song: songId, content: content });
+  song.lyrics.push(newLyric._id);
+  song.save();
   return newLyric;
 };
 
